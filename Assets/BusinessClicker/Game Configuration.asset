@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec86b36c3b23dc94ab733aea7b150ff3, type: 3}
   m_Name: Game Configuration
   m_EditorClassIdentifier: 
-  _listRootPrefab: {fileID: 1843344723840771236, guid: 728bf48f2153ab24cbc22e2e81698c03, type: 3}
+  _listWindowPrefab: {fileID: 1843344723840771236, guid: 728bf48f2153ab24cbc22e2e81698c03, type: 3}
   _businessCardPrefab: {fileID: 3020618989503682272, guid: 8a94af3c5887791469b584d112151a91, type: 3}
+  _improveButtonPrefab: {fileID: 1265979237381135852, guid: 2ec81850eba9fbd44bceaf113701b249, type: 3}
   _businessesData:
   - _name: Business 1
     _incomeDelay: 3
