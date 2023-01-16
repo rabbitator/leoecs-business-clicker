@@ -1,6 +1,5 @@
 using BusinessClicker.Data;
-using BusinessClicker.Ecs.RenderUI.Systems;
-using BusinessClicker.Ecs.WorldInitializer.Systems;
+using BusinessClicker.Ecs.SceneInitializer;
 using Leopotam.EcsLite;
 using UnityEngine;
 
@@ -28,9 +27,7 @@ namespace BusinessClicker.Ecs
             };
 
             _initSystems = new EcsSystems(_ecsWorld, startupData);
-            _initSystems.Add(new MainWindowInitSystem());
-            _initSystems.Add(new BusinessCardsInitSystem());
-            _initSystems.Add(new UpdateUISystem());
+            _initSystems.Add(new SceneInitSystem());
             _initSystems.Init();
 
             _updateSystems = new EcsSystems(_ecsWorld);
