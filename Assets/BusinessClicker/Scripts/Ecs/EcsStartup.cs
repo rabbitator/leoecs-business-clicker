@@ -1,5 +1,6 @@
 using BusinessClicker.Data;
-using BusinessClicker.Ecs.SceneInitializer;
+using BusinessClicker.Ecs.RenderUI.Systems;
+using BusinessClicker.Ecs.WorldInitializer.Systems;
 using Leopotam.EcsLite;
 using UnityEngine;
 
@@ -18,19 +19,21 @@ namespace BusinessClicker.Ecs
         {
             _ecsWorld = new EcsWorld();
 
-            var runtimeData = new RuntimeData
+            var startupData = new StartupData
             {
-                ListWindowPrefab = _configuration.ListWindowPrefab,
+                MainWindowPrefab = _configuration.MainWindowPrefab,
                 BusinessCardPrefab = _configuration.BusinessCardPrefab,
                 ImproveButtonPrefab = _configuration.ImproveButtonPrefab,
                 BusinessesData = _configuration.BusinessesData
             };
 
-            _initSystems = new EcsSystems(_ecsWorld, runtimeData);
-            _initSystems.Add(new SceneInitSystem());
+            _initSystems = new EcsSystems(_ecsWorld, startupData);
+            _initSystems.Add(new MainWindowInitSystem());
+            _initSystems.Add(new BusinessCardsInitSystem());
+            _initSystems.Add(new UpdateUISystem());
             _initSystems.Init();
 
-            _updateSystems = new EcsSystems(_ecsWorld, runtimeData);
+            _updateSystems = new EcsSystems(_ecsWorld);
             _updateSystems.Init();
         }
 

@@ -283,6 +283,7 @@ GameObject:
   - component: {fileID: 1265979237381135840}
   - component: {fileID: 1265979237381135841}
   - component: {fileID: 1265979237381135842}
+  - component: {fileID: 2804244803352804053}
   m_Layer: 5
   m_Name: Improve Button
   m_TagString: Untagged
@@ -421,6 +422,22 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &2804244803352804053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265979237381135852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e6df55647564c7992a85a9314d3d70d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 1265979237381135841}
+  _nameText: {fileID: 1265979236791645517}
+  _featureText: {fileID: 1265979236893438535}
+  _priceText: {fileID: 1265979237940973948}
 --- !u!1 &1265979237940973950
 GameObject:
   m_ObjectHideFlags: 0

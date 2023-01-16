@@ -15,6 +15,7 @@ namespace BusinessClicker.Data
         private float _basePrice;
         [SerializeField, Min(0.0f)]
         private float _baseIncome;
+
         [Space, Header("Improvements")]
         [SerializeField]
         private BusinessImprovement[] _businessImprovements;

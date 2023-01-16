@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace BusinessClicker.Data
 {
@@ -7,7 +8,7 @@ namespace BusinessClicker.Data
     {
         [Header("List Window Settings")]
         [SerializeField]
-        private GameObject _listWindowPrefab;
+        private GameObject _mainWindowPrefab;
         
         [Space]
         [Header("Card Settings")]
@@ -21,7 +22,7 @@ namespace BusinessClicker.Data
         [SerializeField]
         private BusinessData[] _businessesData;
 
-        public GameObject ListWindowPrefab => _listWindowPrefab;
+        public GameObject MainWindowPrefab => _mainWindowPrefab;
         public GameObject BusinessCardPrefab => _businessCardPrefab;
         public GameObject ImproveButtonPrefab => _improveButtonPrefab;
         public BusinessData[] BusinessesData => _businessesData;

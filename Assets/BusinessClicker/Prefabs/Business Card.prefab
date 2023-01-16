@@ -267,6 +267,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d68477be49c64b62a09ef974fe63bdc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _name: {fileID: 3020618991148077585}
+  _progressBar: {fileID: 3020618990218876360}
+  _lvlUpButton: {fileID: 4038569985517012593}
+  _lvlLabel: {fileID: 3020618990436387555}
+  _incomeLabel: {fileID: 3020618990120211082}
   _improveButtonsRoot: {fileID: 3020618989610631351}
 --- !u!1 &3020618989610631350
 GameObject:
@@ -571,6 +576,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d68477be49c64b62a09ef974fe63bdc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _name: {fileID: 0}
+  _progressBar: {fileID: 0}
+  _lvlUpButton: {fileID: 0}
+  _lvlLabel: {fileID: 0}
+  _incomeLabel: {fileID: 0}
   _improveButtonsRoot: {fileID: 0}
 --- !u!1 &3020618990394631581
 GameObject:
@@ -874,6 +884,7 @@ GameObject:
   - component: {fileID: 3020618990688387914}
   - component: {fileID: 3020618990688387913}
   - component: {fileID: 3020618990688387912}
+  - component: {fileID: 4038569985517012593}
   m_Layer: 5
   m_Name: Level Up
   m_TagString: Untagged
@@ -1011,6 +1022,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &4038569985517012593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3020618990688387958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7baca84011d84ecaa55e01628da89b9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 3020618990688387913}
+  _improvementName: {fileID: 3020618989296743096}
+  _price: {fileID: 3020618991141145529}
 --- !u!1 &3020618991141145511
 GameObject:
   m_ObjectHideFlags: 0

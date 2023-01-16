@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec86b36c3b23dc94ab733aea7b150ff3, type: 3}
   m_Name: Game Configuration
   m_EditorClassIdentifier: 
-  _listWindowPrefab: {fileID: 1843344723840771236, guid: 728bf48f2153ab24cbc22e2e81698c03, type: 3}
+  _mainWindowPrefab: {fileID: 1843344723840771236, guid: 728bf48f2153ab24cbc22e2e81698c03, type: 3}
   _businessCardPrefab: {fileID: 3020618989503682272, guid: 8a94af3c5887791469b584d112151a91, type: 3}
   _improveButtonPrefab: {fileID: 1265979237381135852, guid: 2ec81850eba9fbd44bceaf113701b249, type: 3}
   _businessesData:
@@ -21,43 +21,53 @@ MonoBehaviour:
     _basePrice: 3
     _baseIncome: 3
     _businessImprovements:
-    - _price: 50
+    - _name: Improvement Name
+      _price: 50
       _multiplierPercent: 50
-    - _price: 0
+    - _name: Improvement Name
+      _price: 0
       _multiplierPercent: 100
   - _name: Business 2
     _incomeDelay: 6
     _basePrice: 40
     _baseIncome: 40
     _businessImprovements:
-    - _price: 1200
+    - _name: Improvement Name
+      _price: 1200
       _multiplierPercent: 100
-    - _price: 4000
+    - _name: Improvement Name
+      _price: 4000
       _multiplierPercent: 200
   - _name: Business 3
     _incomeDelay: 10
     _basePrice: 200
     _baseIncome: 200
     _businessImprovements:
-    - _price: 6000
+    - _name: Improvement Name
+      _price: 6000
       _multiplierPercent: 100
-    - _price: 20000
+    - _name: Improvement Name
+      _price: 20000
       _multiplierPercent: 150
   - _name: Business 4
     _incomeDelay: 17
     _basePrice: 1000
     _baseIncome: 1000
     _businessImprovements:
-    - _price: 15000
+    - _name: Improvement Name
+      _price: 15000
       _multiplierPercent: 100
-    - _price: 50000
+    - _name: Improvement Name
+      _price: 50000
       _multiplierPercent: 150
   - _name: Business 5
     _incomeDelay: 30
     _basePrice: 5000
     _baseIncome: 5000
     _businessImprovements:
-    - _price: 100000
+    - _name: Improvement Name
+      _price: 100000
       _multiplierPercent: 200
-    - _price: 500000
+    - _name: Improvement Name
+      _price: 500000
       _multiplierPercent: 400

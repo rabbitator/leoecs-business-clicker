@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 75623895702459425}
   - component: {fileID: -1593471872355704364}
   m_Layer: 5
-  m_Name: List Window
+  m_Name: Main Window
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3ccd1ebf8798ef45ade495802627685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _balanceText: {fileID: 7101858198060506982}
   _scroll: {fileID: 7101858196787225323}
 --- !u!1 &7101858196787225321
 GameObject:
@@ -550,7 +551,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50.9
+  m_fontSize: 100
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
