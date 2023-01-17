@@ -12,5 +12,7 @@ namespace BusinessClicker.Data.Views
         private TMP_Text _improvementName;
         [SerializeField]
         private TMP_Text _price;
+
+        public Button Button => _button;
     }
 }

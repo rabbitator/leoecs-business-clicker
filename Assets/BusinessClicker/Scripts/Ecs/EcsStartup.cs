@@ -1,5 +1,7 @@
 using BusinessClicker.Data;
+using BusinessClicker.Ecs.ProgressLoader.Systems;
 using BusinessClicker.Ecs.SceneInitializer;
+using BusinessClicker.Ecs.VisualUpdate.Systems;
 using Leopotam.EcsLite;
 using UnityEngine;
 
@@ -9,7 +11,7 @@ namespace BusinessClicker.Ecs
     {
         [SerializeField]
         private Configuration _configuration;
-        
+
         private EcsWorld _ecsWorld;
         private IEcsSystems _initSystems;
         private IEcsSystems _updateSystems;
@@ -28,9 +30,11 @@ namespace BusinessClicker.Ecs
 
             _initSystems = new EcsSystems(_ecsWorld, startupData);
             _initSystems.Add(new SceneInitSystem());
+            _initSystems.Add(new ProgressLoaderSystem());
             _initSystems.Init();
 
             _updateSystems = new EcsSystems(_ecsWorld);
+            _updateSystems.Add(new VisualUpdateSystem());
             _updateSystems.Init();
         }
 
