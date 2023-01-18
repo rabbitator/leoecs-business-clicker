@@ -7,13 +7,6 @@
       "dependencies": {},
       "hash": "73efbfd9e6dd926f1350c248e3ce1350bf8b7ccc"
     },
-    "com.leopotam.ecslite.unity.ugui": {
-      "version": "https://github.com/Leopotam/ecslite-unity-ugui.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "18a643c67639838e3d74c06b83316e98d0ac17a0"
-    },
     "com.unity.collab-proxy": {
       "version": "1.17.7",
       "depth": 0,
