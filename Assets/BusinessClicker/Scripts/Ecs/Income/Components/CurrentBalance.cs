@@ -1,4 +1,4 @@
-﻿namespace BusinessClicker.Ecs.Finance.Components
+﻿namespace BusinessClicker.Ecs.Income.Components
 {
     public struct CurrentBalance
     {

@@ -21,13 +21,21 @@ namespace BusinessClicker.Data.Views
 
         public Slider ProgressBar => _progressBar;
         public LevelUpButton LvlUpButton => _lvlUpButton;
-        public TMP_Text LvlLabel => _lvlLabel;
-        public TMP_Text IncomeLabel => _incomeLabel;
         public RectTransform ImproveButtonsRoot => _improveButtonsRoot;
 
         public void SetName(string newName)
         {
             _name.text = newName;
+        }
+
+        public void SetLevel(int value)
+        {
+            _lvlLabel.text = $"LVL<br>{value}";
+        }
+
+        public void SetIncome(int value)
+        {
+            _incomeLabel.text = $"Income<br>{value}$";
         }
     }
 }

@@ -1,7 +1,11 @@
 using BusinessClicker.Data;
+using BusinessClicker.Ecs.BusinessUpgrade.Systems;
+using BusinessClicker.Ecs.Income.Systems;
 using BusinessClicker.Ecs.ProgressLoader.Systems;
 using BusinessClicker.Ecs.SceneInitializer;
+using BusinessClicker.Ecs.SceneInitializer.Systems;
 using BusinessClicker.Ecs.VisualUpdate.Systems;
+using BusinessClicker.Services;
 using Leopotam.EcsLite;
 using UnityEngine;
 
@@ -18,22 +22,30 @@ namespace BusinessClicker.Ecs
 
         private void Start()
         {
+            Application.targetFrameRate = 60;
+
             _ecsWorld = new EcsWorld();
 
-            var startupData = new StartupData
+            var gameEventsService = new GameEventsService();
+
+            var gameData = new GameData
             {
                 MainWindowPrefab = _configuration.MainWindowPrefab,
                 BusinessCardPrefab = _configuration.BusinessCardPrefab,
                 ImproveButtonPrefab = _configuration.ImproveButtonPrefab,
-                BusinessesData = _configuration.BusinessesData
+                BusinessesData = _configuration.BusinessesData,
+                GameEventsService = gameEventsService
             };
 
-            _initSystems = new EcsSystems(_ecsWorld, startupData);
+            _initSystems = new EcsSystems(_ecsWorld, gameData);
             _initSystems.Add(new SceneInitSystem());
             _initSystems.Add(new ProgressLoaderSystem());
+            _initSystems.Add(new UserIncomeSystem());
+            _initSystems.Add(new LevelUpgradeSystem());
             _initSystems.Init();
 
-            _updateSystems = new EcsSystems(_ecsWorld);
+            _updateSystems = new EcsSystems(_ecsWorld, gameData);
+            _updateSystems.Add(new BusinessIncomeSystem());
             _updateSystems.Add(new VisualUpdateSystem());
             _updateSystems.Init();
         }
