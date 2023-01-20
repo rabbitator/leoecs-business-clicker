@@ -5,7 +5,7 @@ using BusinessClicker.Ecs.Improvement.Components;
 using Leopotam.EcsLite;
 using UnityEngine;
 
-namespace BusinessClicker.Ecs.ProgressLoader.Systems
+namespace BusinessClicker.Ecs.Progress.Systems
 {
     public class ProgressLoaderSystem : IEcsInitSystem
     {
@@ -25,7 +25,7 @@ namespace BusinessClicker.Ecs.ProgressLoader.Systems
             foreach (var entity in userBalanceFilter)
             {
                 ref var userBalance = ref balancePool.Get(entity);
-                userBalance.Value = PlayerPrefs.GetFloat(PlayerPrefsNames.UserBalance, 0.0f);
+                userBalance.Value = PlayerPrefs.GetFloat(PlayerPrefsNames.GetUserBalanceName(), 0.0f);
             }
         }
 
@@ -45,13 +45,16 @@ namespace BusinessClicker.Ecs.ProgressLoader.Systems
                 ref var business = ref businessesPool.Get(entity);
                 ref var improvements = ref improvementsPool.Get(entity);
 
-                // TODO: Real loading from player prefs
-                business.CurrentLevel = business.Index == 0 ? 1 : 0;
-                businessBalance.Value = 0.0f;
+                var businessLevelPrefName = PlayerPrefsNames.GetBusinessLevelName(business.Index);
+                var businessBalancePrefName = PlayerPrefsNames.GetBusinessBalanceName(business.Index);
+
+                business.CurrentLevel = PlayerPrefs.GetInt(businessLevelPrefName, business.Index == 0 ? 1 : 0);
+                businessBalance.Value = PlayerPrefs.GetFloat(businessBalancePrefName, 0.0f);
 
                 for (var i = 0; i < improvements.Values.Length; i++)
                 {
-                    improvements.Values[i] = false;
+                    var improvementPrefName = PlayerPrefsNames.GetImprovementName(business.Index, i);
+                    improvements.Values[i] = PlayerPrefs.GetInt(improvementPrefName, 0) > 0;
                 }
             }
         }

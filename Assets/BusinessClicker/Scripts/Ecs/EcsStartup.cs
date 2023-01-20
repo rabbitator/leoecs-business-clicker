@@ -2,7 +2,7 @@ using BusinessClicker.Data;
 using BusinessClicker.Ecs.BusinessBehaviour.Systems;
 using BusinessClicker.Ecs.BusinessUpgrade.Systems;
 using BusinessClicker.Ecs.Improvement.Systems;
-using BusinessClicker.Ecs.ProgressLoader.Systems;
+using BusinessClicker.Ecs.Progress.Systems;
 using BusinessClicker.Ecs.SceneInitializer.Systems;
 using BusinessClicker.Ecs.UserIncome.Systems;
 using BusinessClicker.Ecs.VisualUpdate.Systems;
@@ -41,6 +41,7 @@ namespace BusinessClicker.Ecs
             _initSystems = new EcsSystems(_ecsWorld, gameData);
             _initSystems.Add(new SceneInitSystem());
             _initSystems.Add(new ProgressLoaderSystem());
+            _initSystems.Add(new ProgressSaverSystem());
             _initSystems.Add(new UserIncomeSystem());
             _initSystems.Add(new BusinessUpgradeSystem());
             _initSystems.Add(new ImproveBusinessSystem());
