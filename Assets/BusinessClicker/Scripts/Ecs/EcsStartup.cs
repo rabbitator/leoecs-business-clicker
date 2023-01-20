@@ -21,7 +21,7 @@ namespace BusinessClicker.Ecs
         private IEcsSystems _initSystems;
         private IEcsSystems _updateSystems;
 
-        private void Start()
+        private void Awake()
         {
             Application.targetFrameRate = 60;
 
