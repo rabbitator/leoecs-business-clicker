@@ -9,6 +9,6 @@ namespace BusinessClicker.Data
         public GameObject BusinessCardPrefab;
         public GameObject ImproveButtonPrefab;
         public BusinessData[] BusinessesData;
-        public GameEventsService GameEventsService;
+        public GameEvents GameEvents;
     }
 }

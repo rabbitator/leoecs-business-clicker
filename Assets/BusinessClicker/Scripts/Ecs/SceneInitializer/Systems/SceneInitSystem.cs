@@ -1,8 +1,9 @@
 using System;
 using BusinessClicker.Data;
 using BusinessClicker.Data.Views;
+using BusinessClicker.Ecs.BusinessBehaviour.Components;
 using BusinessClicker.Ecs.Common.Components;
-using BusinessClicker.Ecs.Income.Components;
+using BusinessClicker.Ecs.Improvement.Components;
 using Leopotam.EcsLite;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -31,14 +32,17 @@ namespace BusinessClicker.Ecs.SceneInitializer.Systems
                 var cardGO = Object.Instantiate(sharedData.BusinessCardPrefab, mainWindowView.Scroll.content);
                 var cardView = cardGO.GetComponent<BusinessCardView>();
 
-                var cardEntity = ecsWorld.NewEntity();
-                ecsWorld.GetPool<Business>().Add(cardEntity);
-                ref var business = ref ecsWorld.GetPool<Business>().Get(cardEntity);
-                business.Id = Array.IndexOf(sharedData.BusinessesData, businessData);
+                var businessEntity = ecsWorld.NewEntity();
+                ecsWorld.GetPool<Business>().Add(businessEntity);
+                ref var business = ref ecsWorld.GetPool<Business>().Get(businessEntity);
+                business.Index = Array.IndexOf(sharedData.BusinessesData, businessData);
 
-                ecsWorld.GetPool<CurrentBalance>().Add(cardEntity);
-                ref var cardReference = ref ecsWorld.GetPool<UnityObjectReference>().Add(cardEntity);
+                ecsWorld.GetPool<CurrentBalance>().Add(businessEntity);
+                ref var cardReference = ref ecsWorld.GetPool<UnityObjectReference>().Add(businessEntity);
                 cardReference.UnityObject = cardView;
+
+                ref var improvements = ref ecsWorld.GetPool<BusinessImprovements>().Add(businessEntity);
+                improvements.Value = new bool[businessData.BusinessImprovements.Length];
 
                 foreach (var _ in businessData.BusinessImprovements)
                 {

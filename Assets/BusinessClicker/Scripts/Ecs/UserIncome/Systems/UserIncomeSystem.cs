@@ -1,10 +1,11 @@
 ﻿using System;
 using BusinessClicker.Data;
-using BusinessClicker.Ecs.Income.Components;
+using BusinessClicker.Ecs.BusinessBehaviour.Components;
+using BusinessClicker.Ecs.Common.Components;
 using Leopotam.EcsLite;
 using UniRx;
 
-namespace BusinessClicker.Ecs.Income.Systems
+namespace BusinessClicker.Ecs.UserIncome.Systems
 {
     public class UserIncomeSystem : IEcsInitSystem, IEcsDestroySystem
     {
@@ -16,10 +17,10 @@ namespace BusinessClicker.Ecs.Income.Systems
             _ecsWorld = systems.GetWorld();
             var gameData = systems.GetShared<GameData>();
 
-            _eventDisposable = gameData.GameEventsService.OnSomeEvent.AsObservable().Subscribe(GiveMoneyToUser);
+            _eventDisposable = gameData.GameEvents.OnTransferBusinessIncomeToUser.AsObservable().Subscribe(GiveMoneyToUser);
         }
 
-        private void GiveMoneyToUser(float value)
+        private void GiveMoneyToUser(double value)
         {
             var userBalance = _ecsWorld.Filter<CurrentBalance>().Exc<Business>().End();
             var currentBalancePool = _ecsWorld.GetPool<CurrentBalance>();

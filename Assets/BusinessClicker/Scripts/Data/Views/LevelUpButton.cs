@@ -14,5 +14,10 @@ namespace BusinessClicker.Data.Views
         private TMP_Text _price;
 
         public Button Button => _button;
+
+        public void SetPrice(int value)
+        {
+            _price.text = $"{value}$";
+        }
     }
 }

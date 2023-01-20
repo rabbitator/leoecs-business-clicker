@@ -1,5 +1,8 @@
 ﻿using BusinessClicker.Data;
-using BusinessClicker.Ecs.Income.Components;
+using BusinessClicker.Ecs.BusinessBehaviour.Components;
+using BusinessClicker.Ecs.Common.Components;
+using BusinessClicker.Ecs.Improvement.Components;
+using BusinessClicker.Utilities;
 using Leopotam.EcsLite;
 using UnityEngine;
 
@@ -23,7 +26,7 @@ namespace BusinessClicker.Ecs.ProgressLoader.Systems
             foreach (var entity in userBalanceFilter)
             {
                 ref var userBalance = ref balancePool.Get(entity);
-                userBalance.Value = PlayerPrefs.GetFloat(PlayerPrefsNames.UserBalance, 0.0f);
+                userBalance.Value = 1000000.0; // PlayerPrefs.GetFloat(PlayerPrefsNames.UserBalance, 0.0f);
             }
         }
 
@@ -33,18 +36,30 @@ namespace BusinessClicker.Ecs.ProgressLoader.Systems
             var gameData = systems.GetShared<GameData>();
 
             var businessFilter = ecsWorld.Filter<Business>().End();
+
             var balancePool = ecsWorld.GetPool<CurrentBalance>();
-            var dataPool = ecsWorld.GetPool<Business>();
+            var businessesPool = ecsWorld.GetPool<Business>();
+            var improvementsPool = ecsWorld.GetPool<BusinessImprovements>();
 
             foreach (var entity in businessFilter)
             {
                 ref var businessBalance = ref balancePool.Get(entity);
-                ref var businessData = ref dataPool.Get(entity);
+                ref var business = ref businessesPool.Get(entity);
+                ref var improvements = ref improvementsPool.Get(entity);
+                var businessData = gameData.BusinessesData[business.Index];
 
                 // TODO: Real loading from player prefs
-                businessData.CurrentLevel = businessData.Id == 0 ? 1 : 0;
-                businessData.CurrentIncome = gameData.BusinessesData[businessData.Id].BaseIncome;
+                business.CurrentLevel = business.Index == 0 ? 1 : 0;
+
+                var percentValues = FinancialCalculator.GetMaskedImprovements(improvementsPool.Get(entity).Value, businessData.BusinessImprovements);
+                business.CurrentIncome = FinancialCalculator.GetBusinessIncome(business.CurrentLevel, gameData.BusinessesData[business.Index].BaseIncome, percentValues);
+
                 businessBalance.Value = 0.0f;
+
+                for (var i = 0; i < improvements.Value.Length; i++)
+                {
+                    improvements.Value[i] = false;
+                }
             }
         }
     }

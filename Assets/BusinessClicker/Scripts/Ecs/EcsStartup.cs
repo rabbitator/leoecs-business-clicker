@@ -1,9 +1,10 @@
 using BusinessClicker.Data;
+using BusinessClicker.Ecs.BusinessBehaviour.Systems;
 using BusinessClicker.Ecs.BusinessUpgrade.Systems;
-using BusinessClicker.Ecs.Income.Systems;
+using BusinessClicker.Ecs.Improvement.Systems;
 using BusinessClicker.Ecs.ProgressLoader.Systems;
-using BusinessClicker.Ecs.SceneInitializer;
 using BusinessClicker.Ecs.SceneInitializer.Systems;
+using BusinessClicker.Ecs.UserIncome.Systems;
 using BusinessClicker.Ecs.VisualUpdate.Systems;
 using BusinessClicker.Services;
 using Leopotam.EcsLite;
@@ -26,7 +27,7 @@ namespace BusinessClicker.Ecs
 
             _ecsWorld = new EcsWorld();
 
-            var gameEventsService = new GameEventsService();
+            var gameEventsService = new GameEvents();
 
             var gameData = new GameData
             {
@@ -34,14 +35,15 @@ namespace BusinessClicker.Ecs
                 BusinessCardPrefab = _configuration.BusinessCardPrefab,
                 ImproveButtonPrefab = _configuration.ImproveButtonPrefab,
                 BusinessesData = _configuration.BusinessesData,
-                GameEventsService = gameEventsService
+                GameEvents = gameEventsService
             };
 
             _initSystems = new EcsSystems(_ecsWorld, gameData);
             _initSystems.Add(new SceneInitSystem());
             _initSystems.Add(new ProgressLoaderSystem());
             _initSystems.Add(new UserIncomeSystem());
-            _initSystems.Add(new LevelUpgradeSystem());
+            _initSystems.Add(new BusinessUpgradeSystem());
+            _initSystems.Add(new ImproveBusinessSystem());
             _initSystems.Init();
 
             _updateSystems = new EcsSystems(_ecsWorld, gameData);

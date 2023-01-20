@@ -21,21 +21,21 @@ MonoBehaviour:
     _basePrice: 3
     _baseIncome: 3
     _businessImprovements:
-    - _name: Improvement Name
+    - _name: Improvement 1
       _price: 50
       _multiplierPercent: 50
-    - _name: Improvement Name
-      _price: 0
+    - _name: Improvement 2
+      _price: 400
       _multiplierPercent: 100
   - _name: Business 2
     _incomeDelay: 6
     _basePrice: 40
     _baseIncome: 40
     _businessImprovements:
-    - _name: Improvement Name
+    - _name: Improvement 1
       _price: 1200
       _multiplierPercent: 100
-    - _name: Improvement Name
+    - _name: Improvement 2
       _price: 4000
       _multiplierPercent: 200
   - _name: Business 3
@@ -43,10 +43,10 @@ MonoBehaviour:
     _basePrice: 200
     _baseIncome: 200
     _businessImprovements:
-    - _name: Improvement Name
+    - _name: Improvement 1
       _price: 6000
       _multiplierPercent: 100
-    - _name: Improvement Name
+    - _name: Improvement 2
       _price: 20000
       _multiplierPercent: 150
   - _name: Business 4
@@ -54,10 +54,10 @@ MonoBehaviour:
     _basePrice: 1000
     _baseIncome: 1000
     _businessImprovements:
-    - _name: Improvement Name
+    - _name: Improvement 1
       _price: 15000
       _multiplierPercent: 100
-    - _name: Improvement Name
+    - _name: Improvement 2
       _price: 50000
       _multiplierPercent: 150
   - _name: Business 5
@@ -65,9 +65,9 @@ MonoBehaviour:
     _basePrice: 5000
     _baseIncome: 5000
     _businessImprovements:
-    - _name: Improvement Name
+    - _name: Improvement 1
       _price: 100000
       _multiplierPercent: 200
-    - _name: Improvement Name
+    - _name: Improvement 2
       _price: 500000
       _multiplierPercent: 400

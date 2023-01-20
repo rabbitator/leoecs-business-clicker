@@ -27,9 +27,14 @@ namespace BusinessClicker.Data.Views
             _featureText.text = $"Income: +{value}%";
         }
 
-        public void SetPrice(int value, bool bought = false)
+        public void SetPrice(int value)
         {
-            _priceText.text = bought ? "Purchased." : $"Price: {value}";
+            _priceText.text = $"Price: {value}";
+        }
+
+        public void SetPurchased()
+        {
+            _priceText.text = "Purchased";
         }
     }
 }
