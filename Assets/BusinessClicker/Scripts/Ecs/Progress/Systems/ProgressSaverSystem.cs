@@ -19,7 +19,7 @@ namespace BusinessClicker.Ecs.Progress.Systems
             _systems = systems;
             var gameData = systems.GetShared<GameData>();
 
-            _subscribeDisposable = gameData.GameEvents.OnApplicationQuit.Subscribe(ApplicationQuitHandler);
+            _subscribeDisposable = gameData.GameEvents.OnGameExit.Subscribe(GamePauseHandler);
         }
 
         private void SaveUserBalanceProgress()
@@ -71,7 +71,7 @@ namespace BusinessClicker.Ecs.Progress.Systems
             _subscribeDisposable.Dispose();
         }
 
-        private void ApplicationQuitHandler(Unit _)
+        private void GamePauseHandler(Unit _)
         {
             SaveUserBalanceProgress();
             SaveBusinessProgress();

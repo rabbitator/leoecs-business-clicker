@@ -8,14 +8,16 @@ namespace BusinessClicker.Services
         public readonly Subject<double> OnTransferBusinessIncomeToUser;
         public readonly Subject<int> OnBusinessLevelPurchased;
         public readonly Subject<(int, int)> OnBusinessImprovementPurchased;
-        public readonly IObservable<Unit> OnApplicationQuit;
+        public readonly IObservable<Unit> OnGameExit;
 
         public GameEvents()
         {
             OnTransferBusinessIncomeToUser = new Subject<double>();
             OnBusinessLevelPurchased = new Subject<int>();
             OnBusinessImprovementPurchased = new Subject<(int, int)>();
-            OnApplicationQuit = Observable.OnceApplicationQuit();
+            var pauseStream = Observable.EveryApplicationPause().Where(p => p).Select(p => Unit.Default);
+            var quitStream = Observable.OnceApplicationQuit();
+            OnGameExit = pauseStream.Merge(quitStream);
         }
     }
 }
