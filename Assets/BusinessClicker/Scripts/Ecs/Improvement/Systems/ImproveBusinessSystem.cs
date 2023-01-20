@@ -63,7 +63,7 @@ namespace BusinessClicker.Ecs.Improvement.Systems
                 ref var improvement = ref improvementsPool.Get(businessEntity);
 
                 if (business.Index != businessIndex) continue;
-                if (improvement.Value[improvementIndex]) continue;
+                if (improvement.Values[improvementIndex]) continue;
 
                 var improvementPrice = gameData.BusinessesData[businessIndex].BusinessImprovements[improvementIndex].Price;
 
@@ -74,7 +74,7 @@ namespace BusinessClicker.Ecs.Improvement.Systems
                     if (userBalance.Value < improvementPrice) continue;
 
                     userBalance.Value -= improvementPrice;
-                    improvement.Value[improvementIndex] = true;
+                    improvement.Values[improvementIndex] = true;
 
                     gameData.GameEvents.OnBusinessImprovementPurchased.OnNext((businessIndex, improvementIndex));
                 }

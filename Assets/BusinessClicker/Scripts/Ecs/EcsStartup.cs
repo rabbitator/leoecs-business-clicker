@@ -27,7 +27,7 @@ namespace BusinessClicker.Ecs
 
             _ecsWorld = new EcsWorld();
 
-            var gameEventsService = new GameEvents();
+            var gameEvents = new GameEvents();
 
             var gameData = new GameData
             {
@@ -35,7 +35,7 @@ namespace BusinessClicker.Ecs
                 BusinessCardPrefab = _configuration.BusinessCardPrefab,
                 ImproveButtonPrefab = _configuration.ImproveButtonPrefab,
                 BusinessesData = _configuration.BusinessesData,
-                GameEvents = gameEventsService
+                GameEvents = gameEvents
             };
 
             _initSystems = new EcsSystems(_ecsWorld, gameData);
@@ -44,11 +44,12 @@ namespace BusinessClicker.Ecs
             _initSystems.Add(new UserIncomeSystem());
             _initSystems.Add(new BusinessUpgradeSystem());
             _initSystems.Add(new ImproveBusinessSystem());
+            _initSystems.Add(new UserBalanceVisualUpdateSystem());
             _initSystems.Init();
 
             _updateSystems = new EcsSystems(_ecsWorld, gameData);
             _updateSystems.Add(new BusinessIncomeSystem());
-            _updateSystems.Add(new VisualUpdateSystem());
+            _updateSystems.Add(new BusinessVisualUpdateSystem());
             _updateSystems.Init();
         }
 

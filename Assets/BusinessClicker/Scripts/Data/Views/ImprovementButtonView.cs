@@ -29,7 +29,7 @@ namespace BusinessClicker.Data.Views
 
         public void SetPrice(int value)
         {
-            _priceText.text = $"Price: {value}";
+            _priceText.text = $"Price: {value}$";
         }
 
         public void SetPurchased()

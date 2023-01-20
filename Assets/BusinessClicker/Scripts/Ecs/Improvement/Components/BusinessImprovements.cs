@@ -2,6 +2,6 @@
 {
     public struct BusinessImprovements
     {
-        public bool[] Value;
+        public bool[] Values;
     }
 }

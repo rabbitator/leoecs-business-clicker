@@ -2,7 +2,6 @@
 using BusinessClicker.Data.Views;
 using BusinessClicker.Ecs.BusinessBehaviour.Components;
 using BusinessClicker.Ecs.Common.Components;
-using BusinessClicker.Ecs.Improvement.Components;
 using BusinessClicker.Utilities;
 using Leopotam.EcsLite;
 using UniRx;
@@ -36,7 +35,6 @@ namespace BusinessClicker.Ecs.BusinessUpgrade.Systems
             var ecsWorld = _systems.GetWorld();
 
             var currentBalancePool = ecsWorld.GetPool<CurrentBalance>();
-            var improvementsPool = ecsWorld.GetPool<BusinessImprovements>();
 
             var userBalance = ecsWorld.Filter<CurrentBalance>().Exc<Business>().End();
 
@@ -52,9 +50,6 @@ namespace BusinessClicker.Ecs.BusinessUpgrade.Systems
 
                 balance.Value -= nextLevelPrice;
                 business.CurrentLevel++;
-
-                var percentValues = FinancialCalculator.GetMaskedImprovements(improvementsPool.Get(businessEntity).Value, businessData.BusinessImprovements);
-                business.CurrentIncome = FinancialCalculator.GetBusinessIncome(business.CurrentLevel, businessData.BaseIncome, percentValues);
 
                 gameData.GameEvents.OnBusinessLevelPurchased.OnNext(business.Index);
             }

@@ -42,7 +42,7 @@ namespace BusinessClicker.Ecs.SceneInitializer.Systems
                 cardReference.UnityObject = cardView;
 
                 ref var improvements = ref ecsWorld.GetPool<BusinessImprovements>().Add(businessEntity);
-                improvements.Value = new bool[businessData.BusinessImprovements.Length];
+                improvements.Values = new bool[businessData.BusinessImprovements.Length];
 
                 foreach (var _ in businessData.BusinessImprovements)
                 {

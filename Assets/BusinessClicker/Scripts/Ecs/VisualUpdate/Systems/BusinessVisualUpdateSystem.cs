@@ -1,5 +1,4 @@
-﻿using System;
-using BusinessClicker.Data;
+﻿using BusinessClicker.Data;
 using BusinessClicker.Data.Views;
 using BusinessClicker.Ecs.BusinessBehaviour.Components;
 using BusinessClicker.Ecs.Common.Components;
@@ -11,7 +10,7 @@ using UnityEngine;
 
 namespace BusinessClicker.Ecs.VisualUpdate.Systems
 {
-    public class VisualUpdateSystem : IEcsInitSystem, IEcsRunSystem, IEcsDestroySystem
+    public class BusinessVisualUpdateSystem : IEcsInitSystem, IEcsRunSystem, IEcsDestroySystem
     {
         private IEcsSystems _systems;
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
@@ -22,32 +21,22 @@ namespace BusinessClicker.Ecs.VisualUpdate.Systems
             var ecsWorld = systems.GetWorld();
             var gameData = systems.GetShared<GameData>();
 
-            var userBalance = ecsWorld.Filter<CurrentBalance>().Exc<Business>().End();
             var businesses = ecsWorld.Filter<Business>().End();
 
             var businessesPool = ecsWorld.GetPool<Business>();
-            var currentBalancePool = ecsWorld.GetPool<CurrentBalance>();
+            var improvementsPool = ecsWorld.GetPool<BusinessImprovements>();
             var objectReferencesPool = ecsWorld.GetPool<UnityObjectReference>();
-
-            foreach (var entity in userBalance)
-            {
-                ref var balance = ref currentBalancePool.Get(entity);
-                var mainWindowView = (MainWindowView) objectReferencesPool.Get(entity).UnityObject;
-                mainWindowView.SetBalance((int) balance.Value);
-
-                gameData.GameEvents.OnTransferBusinessIncomeToUser.AsObservable().Subscribe(UpdateUserBalance).AddTo(_disposables);
-                gameData.GameEvents.OnBusinessImprovementPurchased.AsObservable().Subscribe(UpdateAfterImprovement).AddTo(_disposables);
-            }
 
             foreach (var entity in businesses)
             {
                 ref var business = ref businessesPool.Get(entity);
+                var improvements = improvementsPool.Get(entity);
                 var view = (BusinessCardView) objectReferencesPool.Get(entity).UnityObject;
                 var businessData = gameData.BusinessesData[business.Index];
 
                 view.SetName(businessData.Name);
                 view.SetLevel(business.CurrentLevel);
-                view.SetIncome((int) business.CurrentIncome);
+                view.SetIncome((int) FinancialCalculator.GetBusinessIncomeByComponents(_systems, business, improvements));
                 view.LvlUpButton.SetPrice((int) FinancialCalculator.GetPriceForBusinessLevel(business.CurrentLevel + 1, businessData.BasePrice));
 
                 var businessIndex = business.Index;
@@ -59,8 +48,11 @@ namespace BusinessClicker.Ecs.VisualUpdate.Systems
                     improveButtons[i].SetFeatureName(businessData.BusinessImprovements[i].Name);
                     improveButtons[i].SetFeatureValue((int) businessData.BusinessImprovements[i].MultiplierPercent);
                     improveButtons[i].SetPrice((int) businessData.BusinessImprovements[i].Price);
+                    improveButtons[i].Button.interactable = !improvements.Values[i];
                 }
             }
+
+            gameData.GameEvents.OnBusinessImprovementPurchased.AsObservable().Subscribe(UpdateAfterImprovement).AddTo(_disposables);
         }
 
         public void Run(IEcsSystems systems)
@@ -70,14 +62,18 @@ namespace BusinessClicker.Ecs.VisualUpdate.Systems
             var businesses = ecsWorld.Filter<Business>().End();
 
             var businessDataPool = ecsWorld.GetPool<Business>();
+            var improvementsPool = ecsWorld.GetPool<BusinessImprovements>();
             var currentBalancePool = ecsWorld.GetPool<CurrentBalance>();
             var objectReferencesPool = ecsWorld.GetPool<UnityObjectReference>();
 
             foreach (var entity in businesses)
             {
+                var business = businessDataPool.Get(entity);
+                var improvements = improvementsPool.Get(entity);
                 var view = (BusinessCardView) objectReferencesPool.Get(entity).UnityObject;
+
                 var currentBalance = currentBalancePool.Get(entity);
-                var income = businessDataPool.Get(entity).CurrentIncome;
+                var income = FinancialCalculator.GetBusinessIncomeByComponents(_systems, business, improvements);
                 view.ProgressBar.value = income <= 0.0 ? 0.0f : Mathf.Clamp01((float) (currentBalance.Value / income));
             }
         }
@@ -87,51 +83,27 @@ namespace BusinessClicker.Ecs.VisualUpdate.Systems
             _disposables.Dispose();
         }
 
-        private void UpdateUserBalance(double _ = 0.0)
-        {
-            var ecsWorld = _systems.GetWorld();
-
-            var userBalance = ecsWorld.Filter<CurrentBalance>().Exc<Business>().End();
-
-            var currentBalancePool = ecsWorld.GetPool<CurrentBalance>();
-            var objectReferencesPool = ecsWorld.GetPool<UnityObjectReference>();
-
-            foreach (var entity in userBalance)
-            {
-                ref var balance = ref currentBalancePool.Get(entity);
-                var mainWindowView = (MainWindowView) objectReferencesPool.Get(entity).UnityObject;
-                mainWindowView.SetBalance((int) balance.Value);
-            }
-        }
-
         private void UpdateAfterLevelUp(int businessIndex)
         {
             var ecsWorld = _systems.GetWorld();
 
             var businesses = ecsWorld.Filter<Business>().End();
-            var userBalance = ecsWorld.Filter<CurrentBalance>().Exc<Business>().End();
 
             var businessPool = ecsWorld.GetPool<Business>();
-            var currentBalancePool = ecsWorld.GetPool<CurrentBalance>();
+            var improvementsPool = ecsWorld.GetPool<BusinessImprovements>();
             var objectReferencePool = ecsWorld.GetPool<UnityObjectReference>();
 
             var businessesData = _systems.GetShared<GameData>().BusinessesData;
-
-            foreach (var entity in userBalance)
-            {
-                ref var balance = ref currentBalancePool.Get(entity);
-                var mainWindowView = (MainWindowView) objectReferencePool.Get(entity).UnityObject;
-                mainWindowView.SetBalance((int) balance.Value);
-            }
 
             foreach (var entity in businesses)
             {
                 ref var business = ref businessPool.Get(entity);
                 if (business.Index != businessIndex) continue;
 
+                var improvements = improvementsPool.Get(entity);
                 var view = (BusinessCardView) objectReferencePool.Get(entity).UnityObject;
                 view.LvlUpButton.SetPrice((int) FinancialCalculator.GetPriceForBusinessLevel(business.CurrentLevel + 1, businessesData[businessIndex].BasePrice));
-                view.SetIncome((int) business.CurrentIncome);
+                view.SetIncome((int) FinancialCalculator.GetBusinessIncomeByComponents(_systems, business, improvements));
                 view.SetLevel(business.CurrentLevel);
             }
         }
@@ -153,18 +125,15 @@ namespace BusinessClicker.Ecs.VisualUpdate.Systems
                 var business = businessPool.Get(entity);
                 if (business.Index != businessIndex) continue;
 
+                var improvements = improvementsPool.Get(entity);
                 var cardView = (BusinessCardView) objectReferencePool.Get(entity).UnityObject;
-                cardView.SetIncome((int) business.CurrentIncome);
+                cardView.SetIncome((int) FinancialCalculator.GetBusinessIncomeByComponents(_systems, business, improvements));
 
                 var improvementView = cardView.ImproveButtonsRoot.GetChild(improvementIndex).GetComponent<ImprovementButtonView>();
-                var improvement = improvementsPool.Get(entity);
-
-                if (!improvement.Value[improvementIndex]) continue;
 
                 improvementView.SetPurchased();
+                improvementView.Button.interactable = false;
             }
-
-            UpdateUserBalance();
         }
     }
 }

@@ -1,11 +1,30 @@
 ﻿using System;
 using System.Linq;
 using BusinessClicker.Data;
+using BusinessClicker.Ecs.BusinessBehaviour.Components;
+using BusinessClicker.Ecs.Improvement.Components;
+using Leopotam.EcsLite;
 
 namespace BusinessClicker.Utilities
 {
     public static class FinancialCalculator
     {
+        /// <summary>
+        /// Get business income based on its state
+        /// </summary>
+        /// <param name="systems"></param>
+        /// <param name="business"></param>
+        /// <param name="improvements"></param>
+        /// <returns></returns>
+        public static double GetBusinessIncomeByComponents(IEcsSystems systems, Business business, BusinessImprovements improvements)
+        {
+            var gameData = systems.GetShared<GameData>();
+            var businessData = gameData.BusinessesData[business.Index];
+            var percentValues = GetMaskedImprovements(improvements.Values, businessData.BusinessImprovements);
+
+            return GetBusinessIncome(business.CurrentLevel, businessData.BaseIncome, percentValues);
+        }
+
         /// <summary>
         /// Calculation of money count needed for purchasing business
         /// </summary>
