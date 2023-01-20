@@ -48,6 +48,7 @@ namespace BusinessClicker.Ecs.VisualUpdate.Systems
                     improveButtons[i].SetFeatureName(businessData.BusinessImprovements[i].Name);
                     improveButtons[i].SetFeatureValue((int) businessData.BusinessImprovements[i].MultiplierPercent);
                     improveButtons[i].SetPrice((int) businessData.BusinessImprovements[i].Price);
+                    if (improvements.Values[i]) improveButtons[i].SetPurchased();
                     improveButtons[i].Button.interactable = !improvements.Values[i];
                 }
             }
