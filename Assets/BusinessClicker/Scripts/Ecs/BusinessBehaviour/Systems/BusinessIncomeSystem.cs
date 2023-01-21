@@ -30,7 +30,7 @@ namespace BusinessClicker.Ecs.BusinessBehaviour.Systems
 
                 var percentValues = FinancialCalculator.GetMaskedImprovements(improvementsPool.Get(entity).Values, data.BusinessImprovements);
                 var totalIncome = FinancialCalculator.GetBusinessIncome(business.CurrentLevel, data.BaseIncome, percentValues);
-                var deltaIncome = totalIncome / data.IncomeDelay * Time.fixedDeltaTime;
+                var deltaIncome = totalIncome / data.IncomeDelay * Time.deltaTime;
 
                 ref var currentBalance = ref currentBalancePool.Get(entity);
                 currentBalance.Value += deltaIncome;

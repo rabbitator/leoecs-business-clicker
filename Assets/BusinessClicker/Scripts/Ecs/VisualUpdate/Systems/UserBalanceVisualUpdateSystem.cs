@@ -30,10 +30,10 @@ namespace BusinessClicker.Ecs.VisualUpdate.Systems
                 ref var balance = ref currentBalancePool.Get(entity);
                 var mainWindowView = (MainWindowView) objectReferencesPool.Get(entity).UnityObject;
                 mainWindowView.SetBalance((int) balance.Value);
-
-                gameData.GameEvents.OnTransferBusinessIncomeToUser.AsObservable().Subscribe(UpdateUserBalance).AddTo(_disposables);
-                gameData.GameEvents.OnBusinessImprovementPurchased.AsObservable().Subscribe(UpdateAfterImprovement).AddTo(_disposables);
             }
+
+            gameData.GameEvents.OnTransferBusinessIncomeToUser.AsObservable().Subscribe(UpdateUserBalance).AddTo(_disposables);
+            gameData.GameEvents.OnBusinessImprovementPurchased.AsObservable().Subscribe(UpdateAfterImprovement).AddTo(_disposables);
 
             foreach (var entity in businesses)
             {
