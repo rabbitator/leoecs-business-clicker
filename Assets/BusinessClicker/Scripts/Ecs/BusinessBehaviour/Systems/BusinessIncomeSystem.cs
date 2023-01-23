@@ -24,12 +24,12 @@ namespace BusinessClicker.Ecs.BusinessBehaviour.Systems
             foreach (var entity in businesses)
             {
                 var business = businessPool.Get(entity);
+                var improvement = improvementsPool.Get(entity);
                 var data = gameData.BusinessesData[business.Index];
 
                 if (business.CurrentLevel <= 0) continue;
 
-                var percentValues = FinancialCalculator.GetMaskedImprovements(improvementsPool.Get(entity).Values, data.BusinessImprovements);
-                var totalIncome = FinancialCalculator.GetBusinessIncome(business.CurrentLevel, data.BaseIncome, percentValues);
+                var totalIncome = FinancialCalculator.GetBusinessIncomeByComponents(systems, business, improvement);
                 var deltaIncome = totalIncome / data.IncomeDelay * Time.deltaTime;
 
                 ref var currentBalance = ref currentBalancePool.Get(entity);

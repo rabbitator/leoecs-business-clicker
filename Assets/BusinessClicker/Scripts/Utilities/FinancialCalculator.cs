@@ -10,6 +10,17 @@ namespace BusinessClicker.Utilities
     public static class FinancialCalculator
     {
         /// <summary>
+        /// Calculation of money count needed for purchasing business
+        /// </summary>
+        /// <param name="level"></param>
+        /// <param name="basePrice"></param>
+        /// <returns></returns>
+        public static double GetPriceForBusinessLevel(int level, double basePrice)
+        {
+            return (level + 1) * basePrice;
+        }
+
+        /// <summary>
         /// Get business income based on its state
         /// </summary>
         /// <param name="systems"></param>
@@ -26,24 +37,13 @@ namespace BusinessClicker.Utilities
         }
 
         /// <summary>
-        /// Calculation of money count needed for purchasing business
-        /// </summary>
-        /// <param name="level"></param>
-        /// <param name="basePrice"></param>
-        /// <returns></returns>
-        public static double GetPriceForBusinessLevel(int level, double basePrice)
-        {
-            return (level + 1) * basePrice;
-        }
-
-        /// <summary>
         /// Calculation of business income with improvements
         /// </summary>
         /// <param name="level"></param>
         /// <param name="baseIncome"></param>
         /// <param name="improveValues">Percent values of improvements</param>
         /// <returns></returns>
-        public static double GetBusinessIncome(int level, double baseIncome, double[] improveValues)
+        private static double GetBusinessIncome(int level, double baseIncome, double[] improveValues)
         {
             var improvementsFactor = improveValues.Length == 0 ? 1.0 : improveValues.Select(PercentToMultiplier).Aggregate((a, b) => a * b);
             return level * baseIncome * improvementsFactor;
@@ -57,7 +57,7 @@ namespace BusinessClicker.Utilities
         /// <param name="data"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static double[] GetMaskedImprovements(bool[] mask, BusinessImprovement[] data)
+        private static double[] GetMaskedImprovements(bool[] mask, BusinessImprovement[] data)
         {
             if (mask.Length != data.Length) throw new Exception("Different arrays length!");
 
